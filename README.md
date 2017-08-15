@@ -3,7 +3,7 @@ Save And Load Tables for Lua
 
 ### Description
 
-Saves Lua table data to a file recursively and human-readable, with indentation. This is done by rwiting the data to the file on-the-fly while iterating through the table data.
+Saves Lua table data to a file recursively and human-readable, with indentation. This is done by writing the data to the file on-the-fly while iterating through the table data.
 
 Supported Types: `number`,`string`,`boolean`, sub-tables of the same. `function` and `userdata` types are not supported.
 
