@@ -9,6 +9,20 @@ Supported Types: `number`,`string`,`boolean`, sub-tables of the same. `function`
 
 Because it's writing as it goes, any unsupported types will be saved as `nil` with a comment noting the error.
 
+### Installation
+
+##### LuaRocks
+
+```bash
+luarocks install salt
+```
+
+##### Git Clone
+
+```bash
+git clone https://github.com/VaiN474/salt.git
+```
+
 ### Usage
 
 ```lua
