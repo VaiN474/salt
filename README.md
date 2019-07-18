@@ -29,9 +29,9 @@ git clone https://github.com/VaiN474/salt.git
 salt = assert(require("salt"))
 
 salt.save(my_table,"/path/to/file")
+salt.save(my_table,"/path/to/file",true) -- data will be compressed
 
 my_table,err = salt.load("/path/to/file")
 ```
 
 When using `salt.load` it will return the table and nil, or if an error occurrs it will return nil and the error message.
-

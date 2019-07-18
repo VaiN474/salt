@@ -20,7 +20,8 @@
 
 local salt = {}
 
-function salt.save(tbl,file)
+-- compressed is optional, if true it will not include unneccesary spaces, indentation, or line endings
+function salt.save(tbl,file,compressed)
 
     local f,err = io.open(file,"w")
     if err then print(err) return end
@@ -42,34 +43,35 @@ function salt.save(tbl,file)
         elseif type(o) == "string" then
             f:write(exportstring(o))
         elseif type(o) == "table" then
-            f:write("{\n")
+            f:write("{" .. (compressed and "" or "\n"))
             indent = indent + 1
             local tab = ""
             for i=1,indent do tab = tab .. "    " end
             for k,v in pairs(o) do
-                f:write(tab .. "[")
+                f:write((compressed and "" or tab) .. "[")
                 serialize(k)
-                f:write("] = ")
+                f:write("]" .. (compressed and "=" or " = "))
                 serialize(v)
-                f:write(",\n")
+                f:write("," .. (compressed and "" or "\n"))
             end
             indent = indent - 1
             tab = ""
             for i=1,indent do tab = tab .. "    " end
-            f:write(tab .. "}")
+            f:write((compressed and "" or tab) .. "}")
         else
             print("unable to serialzie data: "..tostring(o))
-            f:write("nil, -- ***ERROR: unsupported data type: "..type(o).."!***")
+            f:write("nil," .. (compressed and "" or " -- ***ERROR: unsupported data type: "..type(o).."!***"))
         end
     end
 
-    f:write("return {\n")
+    f:write("return {" .. (compressed and "" or "\n"))
+    local tab = "    "
     for k,v in pairs(tbl) do
-        f:write("    [")
+        f:write((compressed and "" or tab) .. "[")
         serialize(k)
-        f:write("] = ")
+        f:write("]" .. (compressed and "=" or " = "))
         serialize(v)
-        f:write(",\n")
+        f:write("," .. (compressed and "" or "\n"))
     end
     f:write("}")
     f:close()
@@ -81,4 +83,3 @@ function salt.load(file)
 end
 
 return salt
-
